@@ -1,4 +1,4 @@
-package umc.spring.StoreService;
+package umc.spring.Service.StoreService;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
