@@ -41,9 +41,13 @@ public class MissionQueryServiceImpl implements MissionQueryService {
      */
     @Override
     public List<Mission> findMissionsByMemberIdAndStatus(Long memberId, MissionStatus status) {
+        // 0번째 페이지부터 10개씩, createdAt 필드 기준 내림차순 정렬로 페이징 설정
         Pageable pageable = PageRequest.of(0, 10, Sort.by("createdAt").descending());
+        // 커스텀 메서드 findMissionsByMemberStatus를 통해 미션을 조회 (페이징 및 상태 필터링)
         Page<Mission> filterdMission = missionRepository.findMissionsByMemberStatus(memberId, status, pageable);
+        // 각 미션 정보를 콘솔에 출력 (로그 목적)
         filterdMission.forEach(mission -> System.out.println("Mission : " + mission));
+        // 조회된 미션의 콘텐츠(리스트)만 반환
         return filterdMission.getContent();
     }
 }

@@ -38,4 +38,15 @@ public class Mission extends BaseEntity {
     @OneToMany(mappedBy = "mission", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<MemberMission> memberMissions = new ArrayList<>(); // 미션에 참여한 회원 리스트
 
+    @Override
+    public String toString() {
+        return "Mission{" +
+                "id=" + id +
+                ", reward=" + reward +
+                ", deadline=" + deadline +
+                ", missionSpec='" + missionSpec + '\'' +
+                ", store=" + (store != null ? store.getName() : "N/A") + // store의 이름만 출력
+                '}';
+    }
+
 }
