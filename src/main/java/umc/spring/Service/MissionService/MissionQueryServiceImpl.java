@@ -50,4 +50,14 @@ public class MissionQueryServiceImpl implements MissionQueryService {
         // 조회된 미션의 콘텐츠(리스트)만 반환
         return filterdMission.getContent();
     }
+
+    @Override
+    public Page<Mission> getMissionsByRegion(Long regionId, Pageable pageable) {
+        // MissionRepository의 getMissionsByRegion 메서드를 호출하여 특정 지역의 미션 목록을 페이징 방식으로 가져옴
+        return missionRepository.findMissionsByRegion(regionId, pageable);
+    }
+
+
+
+
 }

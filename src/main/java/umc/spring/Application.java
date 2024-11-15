@@ -5,10 +5,15 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.Bean;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.repository.config.EnableJpaAuditing;
 import umc.spring.Service.MemberService.MemberQueryService;
 import umc.spring.Service.MissionService.MissionQueryService;
 import umc.spring.Service.StoreService.StoreQueryService;
+import umc.spring.domain.Mission;
 import umc.spring.domain.enums.MissionStatus;
 
 @SpringBootApplication
@@ -52,14 +57,35 @@ public class Application {
 //		};
 //	}
 //
+//	@Bean
+//	public CommandLineRunner run(ApplicationContext context) {
+//		return args -> {
+//			MemberQueryService memberService = context.getBean(MemberQueryService.class);
+//			Long memberId = 1L; // 조회할 멤버 ID 설정
+//
+//			// Member 조회 및 출력
+//			memberService.findMember(memberId).ifPresent(member -> System.out.println("Member: " + member));
+//		};
+//	}
+
+
 	@Bean
 	public CommandLineRunner run(ApplicationContext context) {
 		return args -> {
-			MemberQueryService memberService = context.getBean(MemberQueryService.class);
-			Long memberId = 1L; // 조회할 멤버 ID 설정
+			// MissionQueryService 빈 가져오기
+			MissionQueryService missionQueryService = context.getBean(MissionQueryService.class);
 
-			// Member 조회 및 출력
-			memberService.findMember(memberId).ifPresent(member -> System.out.println("Member: " + member));
+			// 페이징 설정
+			Pageable pageable = PageRequest.of(0, 10, Sort.by("createdAt").descending());
+
+			// 특정 지역 ID를 사용해 미션 조회
+			Long regionId = 1L; // 예시로 1번 지역
+			Page<Mission> missions = missionQueryService.getMissionsByRegion(regionId, pageable);
+
+			// System.out.println으로 미션 정보 출력
+			System.out.println("Missions in region " + regionId + ":");
+			missions.forEach(mission -> System.out.println("Mission: " + mission));
 		};
 	}
+
 }

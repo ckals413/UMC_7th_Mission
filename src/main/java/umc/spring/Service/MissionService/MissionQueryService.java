@@ -1,5 +1,7 @@
 package umc.spring.Service.MissionService;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import umc.spring.domain.Mission;
 import umc.spring.domain.enums.MissionStatus;
 
@@ -24,4 +26,6 @@ public interface MissionQueryService {
      */
 
     List<Mission> findMissionsByMemberIdAndStatus(Long memberId, MissionStatus status);
+    Page<Mission> getMissionsByRegion(Long regionId, Pageable pageable);
+
 }

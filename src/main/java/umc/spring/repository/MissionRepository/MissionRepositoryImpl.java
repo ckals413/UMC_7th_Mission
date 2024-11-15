@@ -9,6 +9,7 @@ import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 import umc.spring.domain.Mission;
 import umc.spring.domain.QMission;
+import umc.spring.domain.QStore;
 import umc.spring.domain.enums.MissionStatus;
 import umc.spring.domain.mapping.QMemberMission;
 
@@ -52,4 +53,27 @@ public class MissionRepositoryImpl implements MissionRepositoryCustom {
 
         return new PageImpl<>(missions, pageable, total);
     }
+
+    @Override
+    public Page<Mission> findMissionsByRegion(Long regionId, Pageable pageable) {
+        QMission mission = QMission.mission;
+        QStore store = QStore.store;
+
+        List<Mission> missions = queryFactory
+                .selectFrom(mission)
+                .join(mission.store, store).fetchJoin()// Fetch Join으로 지연 로딩 방지
+                .where(store.region.id.eq(regionId))
+                .offset(pageable.getOffset())
+                .limit(pageable.getPageSize())
+                .fetch();
+
+        long total = queryFactory
+                .selectFrom(mission)
+                .join(mission.store, store)
+                .where(store.region.id.eq(regionId))
+                .fetchCount();
+
+        return new PageImpl<>(missions, pageable, total);
+    }
+
 }
