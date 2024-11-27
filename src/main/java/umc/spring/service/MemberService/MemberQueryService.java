@@ -1,4 +1,4 @@
-package umc.spring.Service.MemberService;
+package umc.spring.service.MemberService;
 
 import umc.spring.domain.Member;
 

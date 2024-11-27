@@ -1,4 +1,4 @@
-package umc.spring.Service.MissionService;
+package umc.spring.service.MissionService;
 
 
 import lombok.RequiredArgsConstructor;

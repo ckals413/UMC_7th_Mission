@@ -10,11 +10,8 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.repository.config.EnableJpaAuditing;
-import umc.spring.Service.MemberService.MemberQueryService;
-import umc.spring.Service.MissionService.MissionQueryService;
-import umc.spring.Service.StoreService.StoreQueryService;
+import umc.spring.service.MissionService.MissionQueryService;
 import umc.spring.domain.Mission;
-import umc.spring.domain.enums.MissionStatus;
 
 @SpringBootApplication
 @EnableJpaAuditing
