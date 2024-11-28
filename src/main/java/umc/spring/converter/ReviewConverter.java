@@ -3,13 +3,13 @@ package umc.spring.converter;
 import umc.spring.domain.Member;
 import umc.spring.domain.Review;
 import umc.spring.domain.Store;
-import umc.spring.dto.ReviewDto;
+import umc.spring.dto.ReviewRequestDto;
 
 public class ReviewConverter {//ReviewDto도 받는다
-    public static Review toReview(Member requestMember, ReviewDto dto, Store store){
+    public static Review toReview(Member requestMember, ReviewRequestDto request, Store store){
         return Review.builder()
-                .body(dto.getContent()) //리뷰 내용
-                .score(dto.getScore()) //별점
+                .content(request.getContent())
+                .score(request.getScore())
                 .member(requestMember)// 작성자
                 .store(store)// 가게
                 .build();

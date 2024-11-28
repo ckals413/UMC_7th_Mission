@@ -17,10 +17,10 @@ import umc.spring.repository.StoreRepository.StoreRepository;
 public class ReviewQueryServiceImpl implements ReviewQueryService{
     private final ReviewRepository reviewRepository;
     private final StoreRepository storeRepository;
-    @Transactional
-    public Review createReview(Member requestMember, ReviewDto reviewDto, Long storeId){
-        Store store = storeRepository.findById(storeId).get();
-        Review review = ReviewConverter.toReview(requestMember, reviewDto, store);
-        return reviewRepository.save(review);
-    }
+//    @Transactional
+//    public Review createReview(Member requestMember, ReviewDto reviewDto, Long storeId){
+//        Store store = storeRepository.findById(storeId).get();
+//        Review review = ReviewConverter.toReview(requestMember, reviewDto, store);
+//        return reviewRepository.save(review);
+//    }
 }
