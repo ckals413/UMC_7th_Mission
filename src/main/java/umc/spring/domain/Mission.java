@@ -25,11 +25,11 @@ public class Mission extends BaseEntity {
     private Integer reward; // 미션의 보상 포인트
 
     @Column(nullable = false)
-    private LocalDateTime deadline; // 미션의 마감 시간
+    private LocalDate deadline; // 미션의 마감 시간
 
 
-    @Column(columnDefinition = "TEXT", nullable = false)
-    private String missionSpec; //미션설명
+    @Column( nullable = false)
+    private String content; //미션설명
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "store_id")
@@ -44,7 +44,7 @@ public class Mission extends BaseEntity {
                 "id=" + id +
                 ", reward=" + reward +
                 ", deadline=" + deadline +
-                ", missionSpec='" + missionSpec + '\'' +
+                ", content='" + content + '\'' +
                 ", store=" + (store != null ? store.getName() : "N/A") + // store의 이름만 출력
                 '}';
     }
