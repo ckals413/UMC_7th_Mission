@@ -4,6 +4,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import umc.spring.domain.Mission;
 import umc.spring.domain.enums.MissionStatus;
+import umc.spring.domain.mapping.MissionComplete;
 
 import java.util.List;
 import java.util.Optional;
@@ -28,4 +29,7 @@ public interface MissionQueryService {
     List<Mission> findMissionsByMemberIdAndStatus(Long memberId, MissionStatus status);
     Page<Mission> getMissionsByRegion(Long regionId, Pageable pageable);
     Page<Mission> getMissionList(Long storeId, Integer page);
+    // 특정 멤버가 진행중인 미션
+    Page<MissionComplete> getInProgressMissions(Long memberId, Integer page);
+
 }

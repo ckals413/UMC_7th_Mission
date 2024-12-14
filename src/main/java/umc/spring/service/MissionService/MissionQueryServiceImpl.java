@@ -8,9 +8,13 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import umc.spring.domain.Member;
 import umc.spring.domain.Mission;
 import umc.spring.domain.Store;
 import umc.spring.domain.enums.MissionStatus;
+import umc.spring.domain.mapping.MissionComplete;
+import umc.spring.repository.MemberRepository;
+import umc.spring.repository.MissionCompleteRepository;
 import umc.spring.repository.MissionRepository;
 import umc.spring.repository.StoreRepository.StoreRepository;
 
@@ -25,6 +29,8 @@ public class MissionQueryServiceImpl implements MissionQueryService {
 
     private final MissionRepository missionRepository;
     private final StoreRepository storeRepository;
+    private final MissionCompleteRepository missionCompleteRepository;
+    private final MemberRepository memberRepository;
 
     @Override
     public Optional<Mission> findMission(Long id) {
@@ -46,4 +52,15 @@ public class MissionQueryServiceImpl implements MissionQueryService {
         Store store = storeRepository.findById(storeId).get();
         return missionRepository.findAllByStore(store, PageRequest.of(page, 10));
     }
+
+    @Override
+    public Page<MissionComplete> getInProgressMissions(Long memberId, Integer page) {
+        Member member = memberRepository.findById(memberId).get();
+        return missionCompleteRepository.findAllByMemberAndStatus(
+                member,
+                MissionStatus.IN_PROGRESS,
+                PageRequest.of(page, 10)
+        );
+    }
+
 }

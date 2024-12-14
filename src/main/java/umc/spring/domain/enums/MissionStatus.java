@@ -1,5 +1,8 @@
 package umc.spring.domain.enums;
 
 public enum MissionStatus {
-    CHALLENGEING, COMPLETE
+    CHALLENGEING,
+    IN_PROGRESS,
+    COMPLETED,
+    FAILED
 }

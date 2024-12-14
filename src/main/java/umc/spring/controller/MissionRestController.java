@@ -68,4 +68,24 @@ public class MissionRestController {
         Page<Mission> missionList = missionQueryService.getMissionList(storeId, PageValidator.convertPage(page));
         return ApiResponse.onSuccess(MissionConverter.missionPreViewListDTO(missionList));
     }
+
+    @GetMapping("/progress")
+    @Operation(summary = "내가 진행중인 미션 목록 조회 API", description = "로그인한 사용자의 진행중인 미션 목록을 조회하는 API이며, 페이징을 포함합니다.")
+    @ApiResponses({
+            @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "COMMON200", description = "OK, 성공"),
+            @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "AUTH003", description = "access 토큰을 주세요!", content = @Content(schema = @Schema(implementation = ApiResponse.class))),
+            @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "AUTH004", description = "access 토큰 만료", content = @Content(schema = @Schema(implementation = ApiResponse.class))),
+            @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "AUTH006", description = "access 토큰 모양이 이상함", content = @Content(schema = @Schema(implementation = ApiResponse.class)))
+    })
+    @Parameters({
+            @Parameter(name = "memberId", description = "회원 ID입니다.", required = true),
+    })
+    public ApiResponse<MissionResponseDTO.MissionInProgressListDTO> getInProgressMissions(
+            @RequestParam("memberId") @ExistMember Long memberId,
+            @ValidPage @RequestParam(name = "page") Integer page
+    ) {
+        Page<MissionComplete> missionList = missionQueryService.getInProgressMissions(memberId, PageValidator.convertPage(page));
+        return ApiResponse.onSuccess(MissionCompleteConverter.toMissionInProgressListDTO(missionList));
+    }
+
 }
