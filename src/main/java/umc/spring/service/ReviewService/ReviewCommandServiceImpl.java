@@ -31,4 +31,5 @@ public class ReviewCommandServiceImpl implements ReviewCommandService {
         member.getReview().add(newReview);
         return reviewRepository.save(newReview);
     }
+
 }
