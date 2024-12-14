@@ -27,5 +27,5 @@ public interface MissionQueryService {
 
     List<Mission> findMissionsByMemberIdAndStatus(Long memberId, MissionStatus status);
     Page<Mission> getMissionsByRegion(Long regionId, Pageable pageable);
-
+    Page<Mission> getMissionList(Long storeId, Integer page);
 }
