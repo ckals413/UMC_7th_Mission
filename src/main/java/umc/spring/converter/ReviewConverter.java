@@ -31,7 +31,7 @@ public class ReviewConverter {
 
     public static ReviewResponseDTO.ReviewPreViewDTO reviewPreViewDTO(Review review){
         return ReviewResponseDTO.ReviewPreViewDTO.builder()
-                .ownerNickname(review.getMember().getName())
+                .MemberName(review.getMember().getName())
                 .score(review.getScore())
                 .createdAt(review.getCreatedAt().toLocalDate())
                 .content(review.getContent())

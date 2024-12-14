@@ -40,7 +40,7 @@ public class ReviewResponseDTO {
     @NoArgsConstructor
     @AllArgsConstructor
     public static class ReviewPreViewDTO { // dto 담을 리스트
-        String ownerNickname;
+        String MemberName;
         Float score;
         String content;
         LocalDate createdAt;
