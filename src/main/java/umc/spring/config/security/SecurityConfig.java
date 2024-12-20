@@ -25,6 +25,11 @@ public class SecurityConfig {
                         .defaultSuccessUrl("/home", true)//로그인 성공시 home으로 리 다이렉트
                         .permitAll() //모든 사용자가 접근가능
                 )
+                .oauth2Login(oauth2 -> oauth2
+                        .loginPage("/login")
+                        .defaultSuccessUrl("/home", true)
+                        .permitAll()
+                )
                 .logout((logout) -> logout
                         .logoutUrl("/logout")
                         .logoutSuccessUrl("/login?logout") //로그아웃 성공시 리 다이랙트
