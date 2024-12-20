@@ -23,28 +23,35 @@ public class CustomOAuth2UserService extends DefaultOAuth2UserService {
 
     private final MemberRepository memberRepository;
     private final PasswordEncoder passwordEncoder;
-
     @Override
     public OAuth2User loadUser(OAuth2UserRequest userRequest) throws OAuth2AuthenticationException {
         OAuth2User oAuth2User = super.loadUser(userRequest);
 
-        Map<String, Object> attributes = oAuth2User.getAttributes();
-        Map<String, Object> properties = (Map<String, Object>) attributes.get("properties");
+        String registrationId = userRequest.getClientRegistration().getRegistrationId();
+        String email;
+        String nickname;
 
-        String nickname = (String) properties.get("nickname");
-        String email = nickname + "@kakao.com"; // 임시 이메일 생성
+        if ("google".equals(registrationId)) { //구글
+            email = (String) oAuth2User.getAttributes().get("email");
+            nickname = (String) oAuth2User.getAttributes().get("name");
+        } else if ("kakao".equals(registrationId)) { //카카오
+            Map<String, Object> attributes = oAuth2User.getAttributes();
+            Map<String, Object> properties = (Map<String, Object>) attributes.get("properties");
+            nickname = (String) properties.get("nickname");
+            email = nickname + "@kakao.com";
+        } else {
+            throw new OAuth2AuthenticationException("Unsupported provider");
+        }
 
-        // 사용자 정보 저장 또는 업데이트
         Member member = saveOrUpdateUser(email, nickname);
 
-        Map<String, Object> modifiedAttributes = new HashMap<>(attributes);
+        Map<String, Object> modifiedAttributes = new HashMap<>(oAuth2User.getAttributes());
         modifiedAttributes.put("email", email);
 
-        // 이메일을 Principal로 사용하기 위해 DefaultOAuth2User에 닉네임 설정
         return new DefaultOAuth2User(
                 oAuth2User.getAuthorities(),
-                modifiedAttributes,  // 수정된 attributes 사용
-                "email"  // email Principal로 설정
+                modifiedAttributes,
+                "email"
         );
     }
 
